@@ -1,9 +1,16 @@
 import streamlit as st
 import pickle
+import os
+
+# Get current folder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load model and vectorizer
-model = pickle.load(open("imdb_sentiment_model.pkl", "rb"))
-tfidf = pickle.load(open("tfidf_vectorizer.pkl", "rb"))
+model_path = os.path.join(BASE_DIR, "imdb_sentiment_model.pkl")
+vectorizer_path = os.path.join(BASE_DIR, "tfidf_vectorizer.pkl")
+
+model = pickle.load(open(model_path, "rb"))
+tfidf = pickle.load(open(vectorizer_path, "rb"))
 
 # Page config
 st.set_page_config(
@@ -31,15 +38,11 @@ if st.button("Predict Sentiment"):
 
     else:
 
-        # Transform input using TF-IDF
         review_vector = tfidf.transform([review])
 
-        # Predict
         prediction = model.predict(review_vector)
 
-        # Output
         if prediction[0] == 1:
             st.success("😊 Positive Review")
-
         else:
             st.error("😞 Negative Review")
