@@ -14,7 +14,7 @@ tfidf = pickle.load(open(vectorizer_path, "rb"))
 
 # Page config
 st.set_page_config(
-    page_title="IMDB Sentiment Analysis",
+    page_title="LexiSense",
     page_icon="🎬",
     layout="centered"
 )
